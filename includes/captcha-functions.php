@@ -45,9 +45,9 @@ function recaptcha_check_answer ($secret, $remoteip, $challenge, $response, $ext
 		die ("To use reCAPTCHA you must get an API key from <a href='https://www.google.com/recaptcha/admin/create'>https://www.google.com/recaptcha/admin/create</a>");
 	}
 
-	if ($remoteip == null || $remoteip == '') {
-		die ("For security reasons, you must pass the remote ip to reCAPTCHA");
-	}
+//	if ($remoteip == null || $remoteip == '') {
+//		die ("For security reasons, you must pass the remote ip to reCAPTCHA");
+//	}
 
     $response = _recaptcha_http_post (RECAPTCHA_VERIFY_SERVER, "/recaptcha/api/siteverify",
                                           array (
@@ -70,3 +70,54 @@ function recaptcha_check_answer ($secret, $remoteip, $challenge, $response, $ext
         return $recaptcha_response;
 
 }
+
+/**
+ * Submits an HTTP POST to a reCAPTCHA server
+ * @param string $host
+ * @param string $path
+ * @param array $data
+ * @param int port
+ * @return array response
+ */
+function _recaptcha_http_post($host, $path, $data, $port = 80) {
+
+        $req = _recaptcha_qsencode ($data);
+
+        $http_request  = "POST $path HTTP/1.0\r\n";
+        $http_request .= "Host: $host\r\n";
+        $http_request .= "Content-Type: application/x-www-form-urlencoded;\r\n";
+        $http_request .= "Content-Length: " . strlen($req) . "\r\n";
+        $http_request .= "User-Agent: reCAPTCHA/PHP\r\n";
+        $http_request .= "\r\n";
+        $http_request .= $req;
+
+        $response = '';
+        if( false == ( $fs = @fsockopen($host, $port, $errno, $errstr, 10) ) ) {
+                die ('Could not open socket');
+        }
+
+        fwrite($fs, $http_request);
+
+        while ( !feof($fs) )
+                $response .= fgets($fs, 1160); // One TCP-IP packet
+        fclose($fs);
+        $response = explode("\r\n\r\n", $response, 2);
+
+        return $response;
+}
+
+/**
+ * Encodes the given data into a query string format
+ * @param $data - array of string elements to be encoded
+ * @return string - encoded request
+ */
+function _recaptcha_qsencode ($data) {
+        $req = "";
+        foreach ( $data as $key => $value )
+                $req .= $key . '=' . urlencode( stripslashes($value) ) . '&';
+
+        // Cut the last '&'
+        $req=substr($req,0,strlen($req)-1);
+        return $req;
+}
+
