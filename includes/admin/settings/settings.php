@@ -858,7 +858,7 @@ function rcp_settings_page() {
 							</th>
 							<td>
 								<input id="rcp_settings[recaptcha_public_key]" style="width: 300px;" name="rcp_settings[recaptcha_public_key]" type="text" value="<?php if( isset( $rcp_options['recaptcha_public_key'] ) ) echo $rcp_options['recaptcha_public_key']; ?>" />
-								<p class="description"><?php _e( 'This your own personal reCaptcha Public key. Go to', 'rcp' ); ?> <a href="https://www.google.com/recaptcha/admin/list"><?php _e( 'your account', 'rcp' ); ?></a>, <?php _e( 'then click on your domain (or add a new one) to find your public key.', 'rcp' ); ?></p>
+								<p class="description"><?php _e( 'This your own personal reCaptcha Public key. Go to', 'rcp' ); ?> <a href="https://www.google.com/recaptcha/admin/"><?php _e( 'your account', 'rcp' ); ?></a>, <?php _e( 'then click on your domain (or add a new one) to find your public key.', 'rcp' ); ?></p>
 							<td>
 						</tr>
 						<tr valign="top">
@@ -867,7 +867,7 @@ function rcp_settings_page() {
 							</th>
 							<td>
 								<input id="rcp_settings[recaptcha_private_key]" style="width: 300px;" name="rcp_settings[recaptcha_private_key]" type="text" value="<?php if( isset( $rcp_options['recaptcha_private_key'] ) ) echo $rcp_options['recaptcha_private_key']; ?>" />
-								<p class="description"><?php _e( 'This your own personal reCaptcha Private key. Go to', 'rcp' ); ?> <a href="https://www.google.com/recaptcha/admin/list"><?php _e( 'your account', 'rcp' ); ?></a>, <?php _e( 'then click on your domain (or add a new one) to find your private key.', 'rcp' ); ?></p>
+								<p class="description"><?php _e( 'This your own personal reCaptcha Private key. Go to', 'rcp' ); ?> <a href="https://www.google.com/recaptcha/admin/"><?php _e( 'your account', 'rcp' ); ?></a>, <?php _e( 'then click on your domain (or add a new one) to find your private key.', 'rcp' ); ?></p>
 							</td>
 						</tr>
 						<tr valign="top">
